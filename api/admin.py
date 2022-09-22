@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import UserProfile, User
+from .models import UserProfile, User, Driver, Vehicle, Client, Trip, Merchandise, Container, Vidange, Panne, Maintenance, Entretien
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
@@ -44,3 +44,15 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 admin.site.register(User, CustomUserAdmin) 
+
+# Registering the HBZ TMS API models here
+admin.site.register(Driver)
+admin.site.register(Vehicle)
+admin.site.register(Client)
+admin.site.register(Trip)
+admin.site.register(Merchandise)
+admin.site.register(Container)
+admin.site.register(Vidange)
+admin.site.register(Panne)
+admin.site.register(Maintenance)
+admin.site.register(Entretien)

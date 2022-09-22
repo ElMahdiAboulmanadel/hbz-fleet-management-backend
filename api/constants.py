@@ -9,3 +9,21 @@ USER_TYPE_CHOICES = (
       (DRIVER, 'driver'),
       (CLIENT, 'client'),
   )
+
+VEHICLE_CAPACITY_UNIT_CHOICES = (
+        ('kg', 'kg'),
+        ('ton', 'ton'),
+        ('m3', 'm3'),
+        ('l', 'l'),
+        ('cm3', 'cm3'),
+)
+
+WEIGHT_UNIT_CHOICES = (
+        ('kg', 'kg'),
+        ('ton', 'ton'),
+    )
+
+VOLUME_UNIT_CHOICES = (
+        ('m3', 'm3'),
+        ('l', 'l'),
+)
