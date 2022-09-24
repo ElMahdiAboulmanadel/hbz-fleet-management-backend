@@ -8,6 +8,7 @@ import django
 from datetime import timedelta
 from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy
+import dj_database_url
 
 django.utils.encoding.force_text = force_str
 django.utils.translation.ugettext_lazy = gettext_lazy
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'corsheaders',
     'graphene_django',
     'graphene_gis',
     'api'
@@ -50,8 +52,21 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 AUTH_USER_MODEL = 'api.User'
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://hbztms.vercel.app"
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://hbztms.vercel.app"
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,8 +100,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hbz.wsgi.application'
 
-GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
-GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
+# GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+# GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -99,6 +114,11 @@ DATABASES = {
         'PASSWORD': 'mahdi',
     },
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -155,8 +175,12 @@ GRAPHENE = {
 }
 
 GRAPHQL_JWT = {
+    'JWT_PAYLOAD_HANDLER': 'api.utils.jwt_payload',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_EXPIRATION_DELTA": timedelta(minutes=5),
     "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
+    'JWT_SECRET_KEY': SECRET_KEY,
     "JWT_ALLOW_ARGUMENT": True,
+    'JWT_ALGORITHM': 'HS256',
 }
