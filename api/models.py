@@ -1,11 +1,11 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
 from api.managers import UserManager
 from . import constants as user_constants
 
 def user_directory_path(instance, filename):
-        return 'uploads/driving_licences/user_{0}/{1}'.format(instance.user.id, filename)
+    return 'uploads/driving_licences/user_{0}/{1}'.format(instance.user.id, filename)
 
 class User(AbstractUser):
     username = None # remove username field, we will use email as unique identifier
@@ -46,9 +46,9 @@ class Vehicle(models.Model):
     vehicle_type = models.CharField(max_length=255)
     vehicle_number = models.CharField(max_length=255)
     vehicle_model = models.CharField(max_length=255)
-    vehicle_capacity_quantity = models.IntegerField()
+    vehicle_capacity_quantity = models.FloatField()
     vehicle_capacity_unit = models.CharField(max_length=255, choices=user_constants.VEHICLE_CAPACITY_UNIT_CHOICES)
-    vehicule_mileage = models.IntegerField()
+    vehicule_mileage = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -74,9 +74,9 @@ class Merchandise(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="merchandise")
-    weight_quantity = models.IntegerField()
+    weight_quantity = models.FloatField()
     weight_unit = models.CharField(max_length=255, choices=user_constants.WEIGHT_UNIT_CHOICES)
-    volume_quantity = models.IntegerField()
+    volume_quantity = models.FloatField()
     volume_unit = models.CharField(max_length=255, choices=user_constants.VOLUME_UNIT_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -87,7 +87,7 @@ class Merchandise(models.Model):
 class Container(models.Model):
     container_number = models.CharField(max_length=255)
     container_type = models.CharField(max_length=255)
-    container_capacity_quantity = models.IntegerField()
+    container_capacity_quantity = models.FloatField()
     container_capacity_unit = models.CharField(max_length=255, choices=user_constants.VEHICLE_CAPACITY_UNIT_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -100,15 +100,16 @@ class Trip(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="trip")
     container = models.ForeignKey(Container, on_delete=models.CASCADE, related_name="trip")
     merchandises = models.ManyToManyField(Merchandise, related_name="trip")
-    origin = models.CharField(max_length=255)
-    destination = models.CharField(max_length=255)
-    distance = models.IntegerField()
+    origin = models.PointField()
+    destination = models.PointField()
+    distance = models.FloatField()
+    actual_position = models.PointField()
     status = models.CharField(max_length=255)
     departure_date = models.DateTimeField()
     arrival_date = models.DateTimeField()
-    consumption = models.IntegerField()
-    driver_price = models.IntegerField()
-    client_price = models.IntegerField()
+    consumption = models.FloatField()
+    driver_price = models.FloatField()
+    client_price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -118,8 +119,9 @@ class Trip(models.Model):
 class Vidange(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="vidange")
     date = models.DateTimeField()
-    mileage = models.IntegerField()
+    mileage = models.FloatField()
     note = models.TextField()
+    price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -130,8 +132,9 @@ class Panne(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="panne")
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="panne")
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="panne")
-    mileage = models.IntegerField()
+    mileage = models.FloatField()
     description = models.TextField()
+    date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -141,9 +144,10 @@ class Panne(models.Model):
 class Maintenance(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="maintenance")
     date = models.DateTimeField()
-    mileage = models.IntegerField()
+    mileage = models.FloatField()
     pannes = models.ManyToManyField(Panne, related_name="maintenance")
     note = models.TextField(blank=True, null=True)
+    price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
