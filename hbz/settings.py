@@ -100,8 +100,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hbz.wsgi.application'
 
-# GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
-# GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
+GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -175,12 +175,10 @@ GRAPHENE = {
 }
 
 GRAPHQL_JWT = {
-    'JWT_PAYLOAD_HANDLER': 'api.utils.jwt_payload',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_EXPIRATION_DELTA": timedelta(minutes=5),
     "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
     'JWT_SECRET_KEY': SECRET_KEY,
-    "JWT_ALLOW_ARGUMENT": True,
-    'JWT_ALGORITHM': 'HS256',
+    "JWT_ALLOW_ARGUMENT": True
 }
