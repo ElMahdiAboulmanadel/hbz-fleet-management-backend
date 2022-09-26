@@ -100,8 +100,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hbz.wsgi.application'
 
-GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
-GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
+# GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+# GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
