@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.gis.db import models
+from django.db import models
 from django.utils import timezone
 from api.managers import UserManager
 from . import constants as user_constants
@@ -19,7 +19,6 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name="user_profile")
@@ -100,10 +99,10 @@ class Trip(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="trip")
     container = models.ForeignKey(Container, on_delete=models.CASCADE, related_name="trip")
     merchandises = models.ManyToManyField(Merchandise, related_name="trip")
-    origin = models.PointField()
-    destination = models.PointField()
+    origin = models.CharField(max_length=255)
+    destination = models.CharField(max_length=255)
     distance = models.FloatField()
-    actual_position = models.PointField()
+    actual_position = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     departure_date = models.DateTimeField()
     arrival_date = models.DateTimeField()
@@ -120,7 +119,7 @@ class Vidange(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="vidange")
     date = models.DateTimeField()
     mileage = models.FloatField()
-    note = models.TextField()
+    note = models.TextField(blank = True, null = True)
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
