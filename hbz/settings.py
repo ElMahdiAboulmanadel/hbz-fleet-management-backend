@@ -62,19 +62,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://hbz.vercel.app"
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1",
-    'http://localhost',
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://hbz.vercel.app"
-]
 CORS_ALLOW_CREDENTIALS = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
