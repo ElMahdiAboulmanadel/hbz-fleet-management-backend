@@ -52,17 +52,24 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 AUTH_USER_MODEL = 'api.User'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1",
+    'http://localhost',
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://hbz.vercel.app"
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    "http://127.0.0.1",
+    'http://localhost',
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://hbz.vercel.app"
 ]
+CORS_ALLOW_CREDENTIALS = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
