@@ -13,7 +13,6 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    user_type = models.PositiveSmallIntegerField(choices=user_constants.USER_TYPE_CHOICES)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'

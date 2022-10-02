@@ -22,10 +22,10 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
     inlines = (UserProfileInline,)
     list_display = ('email', 'is_staff', 'is_active', 'is_superuser',)
-    list_filter = ('email', 'is_staff', 'is_active', 'is_superuser', 'user_type')
+    list_filter = ('email', 'is_staff', 'is_active', 'is_superuser',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (('Personal info'), {'fields': ('first_name', 'last_name','user_type')}),
+        (('Personal info'), {'fields': ('first_name', 'last_name')}),
         (('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
@@ -34,7 +34,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'user_type')}
+            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'first_name', 'last_name')}
          ),
     )
 
