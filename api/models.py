@@ -124,7 +124,7 @@ class Vidange(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.vehicle.vehicle_number + " " + self.date
+        return self.vehicle.vehicle_number
 
 class Panne(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="panne")
@@ -150,7 +150,7 @@ class Maintenance(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.vehicle.vehicle_number + " " + self.date
+        return self.vehicle.vehicle_number
 
 class Entretien(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="entretien")
@@ -160,4 +160,4 @@ class Entretien(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.vehicle.vehicle_number + " " + self.date
+        return self.vehicle.vehicle_number
