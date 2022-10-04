@@ -127,7 +127,7 @@ class Query(graphene.ObjectType):
     def resolve_vehicle(self, info, **kwargs):
         id = kwargs.get('id')
         if id is not None:
-            return Vehicle.objects.get
+            return Vehicle.objects.get(pk=id)
     
     @login_required
     def resolve_clients(self, info, **kwargs):
