@@ -1,7 +1,7 @@
 # hbz-backend
 Fleet management system GraphQL API using Django, Graphene, Postgres/PostGIS and GeoDjango for internship in HBZ Holding.
 
-Link to frontend : https://github.com/ElMahdiAboulmanadel/hbz/
+Link to frontend : https://github.com/ElMahdiAboulmanadel/hbz-fleet-management-frontend/
 
 Class Diagram : 
 ![alt text](https://github.com/ElMahdiAboulmanadel/hbz-backend/blob/master/HBZ%20-%20Conception.png)
